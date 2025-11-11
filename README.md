@@ -29,9 +29,20 @@ We used the **`heart.csv`** dataset containing several health-related features s
 ## Model Training
 - **Algorithm:** Logistic Regression  
 - **Train-Test Split:** Split data into training and testing sets.  
-- **Evaluation Metric:** Accuracy Score  
-
+- **Evaluation Metric:** Accuracy Score
 After training, the **model achieved an accuracy of 0.864 (86.4%)** on the test set.
+
+-**Algorithm 2:** Random Forest (Set parameters)
+- **Train-Test Split:** Split data into training and testing sets.  
+- **Evaluation Metric:** Accuracy Score
+  
+After training, the **model achieved an accuracy of 0.842 (84.2%)** on the test set.
+
+-**Algorithm 3:** Random Forest (Grid Sarch to get parameters)
+- **Train-Test Split:** Split data into training and testing sets.  
+- **Evaluation Metric:** Accuracy Score
+  
+After training, the **model achieved an accuracy of 0.880 (88.0%)** on the test set.
 
 ---
 
@@ -39,6 +50,7 @@ After training, the **model achieved an accuracy of 0.864 (86.4%)** on the test 
 - Data cleaning and feature inspection significantly impact model performance.  
 - Checking for invalid zero values is essential, especially in medical datasets.  
 - Logistic Regression provides strong baseline performance for binary classification.
+- GridSearch significantly improved our accuracy score. Finetuning hyperparameters is very important and beneficial.
 
 ---
 
