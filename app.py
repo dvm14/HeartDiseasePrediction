@@ -6,6 +6,7 @@ st.title("❤️ Heart Disease Prediction App")
 st.write("Enter patient information below and click **Predict** to see the model's output.")
 
 API_URL = "https://heart-api-41967139984.us-central1.run.app/predict"
+# Chatgpt was used to help deploy this fast api on the cloud on 22nd November at 4:00pm
 
 
 # --- Input fields ---
