@@ -6,7 +6,7 @@ import joblib
 app = FastAPI(title="Heart Disease Predictor (Pipeline)")
 
 # Load the pipeline you saved
-model = joblib.load("model.pkl")
+model = joblib.load("models/best_rf_model.pkl")
 
 # Pydantic schema: use natural types found in the CSV
 # Sex: "M"/"F"
