@@ -90,6 +90,7 @@ docker run -e WANDB_API_KEY=<your_key> heart-disease python src/run_model.py
 ### 4) Run API server
 ```bash
 docker run -p 8080:8080 heart-disease
+http://localhost:8080 should work after running the api server
 ```
 
 ### Optional: Pre-process data
