@@ -109,6 +109,37 @@ Once you click the "Predict" button at the bottom, you will receive a prediction
 
 ---
 
+## Deploying the API to Google Cloud Run
+
+We deployed our trained FastAPI model as a containerized web service using Google Cloud Run.  
+Below are the deployment steps:
+
+### 1️. Create a Google Cloud Project
+- Go to the [Google Cloud Console](https://console.cloud.google.com/).  
+- Create a new project (e.g., `heart-api`) and note the Project ID.  
+---
+
+### 2️. Authenticate and Set Up gcloud
+```bash
+gcloud auth login
+gcloud config set project <PROJECT_ID>
+```
+---
+### 3. Build the docker image
+gcloud builds submit --tag gcr.io/<PROJECT_ID>/heart-api
+
+### 4. Deploy your api as a fully managed service
+gcloud run deploy heart-api \
+  --image gcr.io/<PROJECT_ID>/heart-api \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated \
+  --port 8080
+- After a few moments, you’ll get a Service URL (e.g.,
+https://heart-api-41967139984.us-central1.run.app) — this is ours.
+
+
+
 ## Link to deployed API and front-end app
 
 Deployed API: https://heart-api-41967139984.us-central1.run.app/docs
