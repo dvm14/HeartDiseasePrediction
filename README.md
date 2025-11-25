@@ -125,18 +125,8 @@ gcloud auth login
 gcloud config set project <PROJECT_ID>
 ```
 ---
-### 3. Build the docker image
-gcloud builds submit --tag gcr.io/<PROJECT_ID>/heart-api
-
-### 4. Deploy your api as a fully managed service
-gcloud run deploy heart-api \
-  --image gcr.io/<PROJECT_ID>/heart-api \
-  --platform managed \
-  --region us-central1 \
-  --allow-unauthenticated \
-  --port 8080
-- After a few moments, you’ll get a Service URL (e.g.,
-https://heart-api-41967139984.us-central1.run.app) — this is ours.
+### 3. Run this single command to build and deploy (make sure you are in the right directory before running this)
+gcloud run deploy heart-api --source . --platform managed --region us-central1 --allow-unauthenticated
 
 
 
