@@ -23,7 +23,7 @@ We used the **`heart.csv`** dataset containing several health-related features s
 
 The dataset in held on Google Cloud Storage: https://storage.googleapis.com/heartdiseaseprediction_bucket/data_folder/preprocessed_data.csv.
 
----
+
 
 ## Repository Structure
 
