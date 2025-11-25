@@ -42,7 +42,7 @@ def load_saved_data(url):
 def train_lr_model(X_train, y_train):
     model = LogisticRegression()
     model.fit(X_train, y_train)
-    path = os.path.abspath('../models/lr_model.pkl')
+    path = os.path.abspath('models/lr_model.pkl')
     dump(model, path)
     wandb.save(path)
     return model
@@ -55,7 +55,7 @@ def test_model(model, X_test, y_test):
 def train_rf_model(X_train, y_train, n_estimators, max_depth, random_state):
     model = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth, random_state=random_state)
     model.fit(X_train, y_train)
-    path = os.path.abspath('../models/rf_model.pkl')
+    path = os.path.abspath('models/rf_model.pkl')
     dump(model, path)
     wandb.save(path)
     return model
@@ -69,7 +69,7 @@ def tune_rf_model(X_train, y_train):
     grid_search.fit(X_train, y_train)
 
     print(grid_search.best_params_, grid_search.best_score_)
-    path = os.path.abspath('../models/best_rf_model.pkl')
+    path = os.path.abspath('models/best_rf_model.pkl')
     dump(model, path)
     wandb.save(path)
     return grid_search.best_estimator_
@@ -77,7 +77,7 @@ def tune_rf_model(X_train, y_train):
 if __name__ == '__main__':
     data = load_saved_data('https://storage.googleapis.com/heartdiseaseprediction_bucket/data_folder/preprocessed_data.csv')
     
-    with open('config.yaml', 'r') as f:
+    with open('src/config.yaml', 'r') as f:
         config = yaml.safe_load(f)
 
     wandb.init(entity="dmirji", project="heart-disease-prediction", config=config)

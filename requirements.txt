@@ -101,11 +101,9 @@ yarl==1.22.0
 fastapi
 uvicorn
 joblib
-scikit-learn
 numpy
 pydantic
 streamlit
 requests
-scikit-learn==1.6.1
 pandas
 
