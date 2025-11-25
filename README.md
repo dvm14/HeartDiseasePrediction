@@ -46,7 +46,6 @@ HeartDiseasePrediction/
 ├── Dockerfile
 └── README.md
 
----
 
 ## Model Training
 - **Algorithm:** Logistic Regression  
