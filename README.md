@@ -126,7 +126,9 @@ gcloud config set project <PROJECT_ID>
 ```
 ---
 ### 3. Run this single command to build and deploy (make sure you are in the right directory before running this)
+```bash
 gcloud run deploy heart-api --source . --platform managed --region us-central1 --allow-unauthenticated
+```
 
 
 
