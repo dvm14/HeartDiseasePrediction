@@ -1,6 +1,15 @@
 # Heart Disease Prediction
 
-This project aims to predict the likelihood of heart disease based on clinical and lifestyle attributes using the **Heart Disease Dataset (`heart.csv`)**. The model was developed using Python with a focus on data cleaning, feature engineering, and classification using **Logistic Regression**.
+This project aims to predict the likelihood of heart disease based on clinical and lifestyle attributes using the **Heart Disease Dataset (`heart.csv`)**. The model was developed using Python with a focus on data cleaning, feature engineering, and classification using Logistic Regression and Random Forest Classifier.
+
+The goals of this project is to practice creating an end-to-end ML pipeline:
+- Practice sourcing, cleaning, and hosting real-world data in the cloud
+- Build reproducible, modular ML pipelines using configuration files and containers
+- Track experiments using MLFlow or Weights & Biases
+- Deploy a model as an API endpoint using cloud services
+- Build a lightweight front-end to consume a live model API
+- Follow GitHub best practices for collaboration and version control
+- Reflect on ethical implications and limitations of your ML application
 
 ---
 
@@ -12,57 +21,104 @@ We used the **`heart.csv`** dataset containing several health-related features s
 - Chest Pain Type, ECG Results, Exercise-Induced Angina
 - Target (indicating presence of heart disease)
 
+The dataset in held on Google Cloud Storage: https://storage.googleapis.com/heartdiseaseprediction_bucket/data_folder/preprocessed_data.csv.
+
 ---
 
-## Data Preprocessing
-1. **Data Inspection** – Checked dataset shape, column types, and summary statistics.  
-2. **Missing Values** – Verified that there were *no null values* in the dataset.  
-3. **Zero-Value Analysis** – Investigated whether `0` values in features were valid.  
-   - Found that `RestingBP` and `Cholesterol` cannot realistically be `0`.  
-   - Replaced zeros in these columns with `NaN` to mark them as missing.  
-4. **Feature Encoding** – Encoded categorical features appropriately for model input.  
-5. **Feature Scaling** – Applied `StandardScaler` to normalize numerical features.  
-6. **Feature Selection** – Used all columns as input features except the target variable.
+## Repository Structure
+
+HeartDiseasePrediction/
+├── data/
+│   ├── heart.csv             # raw data
+│   └── preprocessed_data.csv # pre-processed data
+├── models/
+│   ├── best_rf_model.pkl     # Best Random Forest Model (algorithm 3)
+│   ├── lr_model.pkl          # Basic Logistic Regression Model (algorithm 1)
+│   └── rf_model.pkl          # Basic Random Forest Model (algorithm 2)
+├── src/
+│   ├── app.py                # API
+│   ├── config.yaml           # yaml for pipeline attributes
+│   ├── main.py               # Hugging Face front-end
+│   ├── process_data.py       # Pre-process the raw data
+│   ├── run_model.py          # Runs training of the different models and their evaluation
+├── requirements.txt
+├── .gitignore
+├── Dockerfile
+└── README.md
 
 ---
 
 ## Model Training
 - **Algorithm:** Logistic Regression  
-- **Train-Test Split:** Split data into training and testing sets.  
+- **Train-Test Split:** Split data into training 80% and testing 20% sets.  
 - **Evaluation Metric:** Accuracy Score
 After training, the **model achieved an accuracy of 0.864 (86.4%)** on the test set.
 
--**Algorithm 2:** Random Forest (Set parameters)
-- **Train-Test Split:** Split data into training and testing sets.  
+-**Algorithm 2:** Random Forest (Set parameters from config.yaml)
+- **Train-Test Split:** Split data into training 80% and testing 20% sets.  
 - **Evaluation Metric:** Accuracy Score
   
-After training, the **model achieved an accuracy of 0.842 (84.2%)** on the test set.
+After training, the **model achieved an accuracy of 0.826 (82.6%)** on the test set.
 
--**Algorithm 3:** Random Forest (Grid Sarch to get parameters)
-- **Train-Test Split:** Split data into training and testing sets.  
+-**Algorithm 3:** Random Forest (Grid Search to get best parameters)
+- **Train-Test Split:** Split data into training 80% and testing 20% sets.  
 - **Evaluation Metric:** Accuracy Score
   
-After training, the **model achieved an accuracy of 0.880 (88.0%)** on the test set.
+After training, the **model achieved an accuracy of 0.875 (87.5%)** on the test set.
+We decided to use Algorithm 3 of Random Forest with the best parameters as our selected trained model for the deployed API.
 
 ---
 
-## Key Learnings
-- Data cleaning and feature inspection significantly impact model performance.  
-- Checking for invalid zero values is essential, especially in medical datasets.  
-- Logistic Regression provides strong baseline performance for binary classification.
-- GridSearch significantly improved our accuracy score. Finetuning hyperparameters is very important and beneficial.
+## Setup
+
+### 1) Clone the repo
+```bash
+git clone https://github.com/dvm14/HeartDiseasePrediction.git
+cd HeartDiseasePrediction
+```
+
+### 2) Build the docker image
+Build only once
+```bash
+docker build -t heart-disease .
+```
+
+### 3) Run training with Weights and Biases logging
+```bash
+docker run -e WANDB_API_KEY=<your_key> heart-disease python src/run_model.py
+```
+
+### 4) Run API server
+```bash
+docker run -p 8080:8080 heart-disease
+```
+
+### Optional: Pre-process data
+The data is already pre-processed and stored in a Google Cloud Storage bucket. But in case you would like to pre-process again.
+```bash
+docker run heart-disease python src/process_data.py
+```
 
 ---
 
-## Technologies Used
-- Python (Pandas, NumPy, Scikit-learn)
-- Jupyter Notebook / Google Colab
-- Matplotlib & Seaborn (optional for visualization)
+## Usage
+
+On the front-end app, you will be able to enter patient information.
+Once you click the "Predict" button at the bottom, you will receive a prediction from our trained model of whether the patient with have Heart Disease or No Heart Disease.
+
+
+---
+
+## Link to deployed API and front-end app
+
+Deployed API: https://heart-api-41967139984.us-central1.run.app/docs
+
+Front-end App: https://huggingface.co/spaces/tiffany101/heart_disease_predictor
 
 ---
 
 ## 📈 Future Improvements
-- Experiment with advanced models like Random Forest, XGBoost, or Neural Networks.  
+- Experiment with advanced models like XGBoost or Neural Networks.  
 - Perform hyperparameter tuning for improved accuracy.  
 - Handle missing values using imputation instead of direct removal.
 
